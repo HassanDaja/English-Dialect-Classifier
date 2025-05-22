@@ -1,0 +1,10 @@
+streamlit
+yt-dlp
+openai-whisper
+torch
+transformers
+pandas
+altair
+validators
+numpy
+ffmpeg-python

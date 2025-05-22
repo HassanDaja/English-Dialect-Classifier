@@ -156,33 +156,6 @@ def display_results(results: Dict[str, Any], video_title: str):
         with st.expander("View Segment Details", expanded=False):
             st.dataframe(df)
 
-    # Export options
-    st.subheader("Export Results")
-    export_col1, export_col2 = st.columns(2)
-
-    with export_col1:
-        if st.button("Export as JSON"):
-            file_path = utils.export_results(results, "json", "data", video_title)
-            with open(file_path, 'r') as f:
-                json_data = json.load(f)
-            st.download_button(
-                label="Download JSON",
-                data=json.dumps(json_data, indent=2),
-                file_name=f"{utils.sanitize_filename(video_title)}_results.json",
-                mime="application/json"
-            )
-
-    with export_col2:
-        if st.button("Export as CSV"):
-            file_path = utils.export_results(results, "csv", "data", video_title)
-            with open(file_path, 'r') as f:
-                csv_data = f.read()
-            st.download_button(
-                label="Download CSV",
-                data=csv_data,
-                file_name=f"{utils.sanitize_filename(video_title)}_results.csv",
-                mime="text/csv"
-            )
 
 
 def process_video(video_path_or_url: str, is_url: bool = True) -> Tuple[Optional[Dict], Optional[str]]:
@@ -259,52 +232,25 @@ def main():
         - Transformers for dialect classification
         """)
 
-    # Input methods tabs
-    tab1, tab2 = st.tabs(["URL Input", "File Upload"])
+    # URL input section (no tabs needed now)
+    st.subheader("Enter Video URL")
+    url_input = st.text_input("Video URL (YouTube, direct links, etc.)", key="url_input")
 
-    with tab1:
-        st.subheader("Enter Video URL")
-        url_input = st.text_input("Video URL (YouTube, direct links, etc.)", key="url_input")
+    # URL validation
+    if url_input:
+        if not utils.is_valid_url(url_input):
+            st.error("Invalid URL format. Please enter a valid URL.")
+        elif not utils.is_video_url(url_input):
+            st.warning("URL might not point to a video. Processing may fail.")
 
-        # URL validation
+    # Process button for URL
+    if st.button("Process URL", disabled=not url_input, key="process_url_btn"):
         if url_input:
-            if not utils.is_valid_url(url_input):
-                st.error("Invalid URL format. Please enter a valid URL.")
-            elif not utils.is_video_url(url_input):
-                st.warning("URL might not point to a video. Processing may fail.")
+            with st.spinner("Processing video..."):
+                results, video_title = process_video(url_input, is_url=True)
 
-        # Process button for URL
-        if st.button("Process URL", disabled=not url_input, key="process_url_btn"):
-            if url_input:
-                with st.spinner("Processing video..."):
-                    results, video_title = process_video(url_input, is_url=True)
-
-                if results and video_title:
-                    display_results(results, video_title)
-
-    with tab2:
-        st.subheader("Upload Video File")
-        uploaded_file = st.file_uploader("Choose a video file", type=["mp4", "mov", "avi", "mkv", "webm"])
-
-        if uploaded_file:
-            # Save uploaded file to temp location
-            with tempfile.NamedTemporaryFile(delete=False, suffix=Path(uploaded_file.name).suffix) as tmp_file:
-                tmp_file.write(uploaded_file.getvalue())
-                tmp_filepath = tmp_file.name
-
-            # Process button for file
-            if st.button("Process File", key="process_file_btn"):
-                with st.spinner("Processing video..."):
-                    results, video_title = process_video(tmp_filepath, is_url=False)
-
-                # Clean up temp file
-                try:
-                    os.unlink(tmp_filepath)
-                except:
-                    pass
-
-                if results and video_title:
-                    display_results(results, video_title)
+            if results and video_title:
+                display_results(results, video_title)
 
 
 if __name__ == "__main__":

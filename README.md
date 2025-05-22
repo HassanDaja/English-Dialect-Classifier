@@ -5,12 +5,10 @@ A Python application that classifies English dialects from video URLs or uploade
 ## Features
 
 - Video URL support (YouTube, direct links, etc.)
-- Local video file upload support
 - Audio transcription using OpenAI's Whisper
 - Dialect classification using transformers
 - Confidence scores for multiple dialects
 - Timeline-based dialect analysis for longer videos
-- Export results as JSON or CSV
 - Interactive visualizations
 
 ## Architecture

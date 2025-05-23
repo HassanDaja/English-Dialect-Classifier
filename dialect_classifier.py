@@ -57,7 +57,7 @@ class DialectClassifier:
     }
     
     def __init__(self, 
-                 whisper_model_size: str = "base", 
+                 whisper_model_size: str = "large",
                  dialect_model_name: str = "distilbert-base-uncased",
                  device: Optional[str] = None):
         """

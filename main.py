@@ -37,8 +37,8 @@ def load_classifier():
     """Load the classifier model with caching."""
     try:
         return DialectClassifier(
-            whisper_model_size="tiny",
-            dialect_model_name="xlm-roberta-base"
+            whisper_model_size="small",
+            dialect_model_name="albert-base-v2"
         )
     except Exception as e:
         st.error(f"Failed to load models: {str(e)}")

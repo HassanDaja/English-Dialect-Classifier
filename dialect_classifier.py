@@ -219,9 +219,9 @@ class DialectClassifier:
             final_scores = {}
             for dialect in self.SUPPORTED_DIALECTS:
                 final_scores[dialect] = (
-                    0.2 * pattern_scores[dialect] +
-                    0.3 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
-                    0.5 * zero_shot_scores[dialect]
+                    0.2* pattern_scores[dialect] +
+                    0.1 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
+                    0.7 * zero_shot_scores[dialect]
                 )
             
             # Normalize final scores

@@ -58,7 +58,7 @@ class DialectClassifier:
     
     def __init__(self, 
                  whisper_model_size: str = "large",
-                 dialect_model_name: str = "distilbert-base-uncased",
+                 dialect_model_name: str = "distilbert-large-uncased",
                  device: Optional[str] = None):
         """
         Initialize the DialectClassifier.
@@ -97,7 +97,7 @@ class DialectClassifier:
             # Initialize zero-shot classification pipeline
             self.classifier = pipeline(
                 "zero-shot-classification",
-                model="facebook/bart-large-mnli",
+                model="microsoft/deberta-large-mnli",
                 device=0 if self.device == "cuda" else -1
             )
             
@@ -219,11 +219,15 @@ class DialectClassifier:
             final_scores = {}
             for dialect in self.SUPPORTED_DIALECTS:
                 final_scores[dialect] = (
-                    0.2* pattern_scores[dialect] +
-                    0.1 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
+                    0* pattern_scores[dialect] +
+                    0.3 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
                     0.7 * zero_shot_scores[dialect]
                 )
-            
+                print(dialect)
+                print(pattern_scores[dialect])
+                print(transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] )
+                print(zero_shot_scores[dialect])
+
             # Normalize final scores
             total_score = sum(final_scores.values())
             if total_score > 0:

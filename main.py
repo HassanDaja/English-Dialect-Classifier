@@ -37,7 +37,7 @@ def load_classifier():
     """Load the classifier model with caching."""
     try:
         return DialectClassifier(
-            whisper_model_size="small",
+            whisper_model_size="tiny",
             dialect_model_name="xlm-roberta-base"
         )
     except Exception as e:

@@ -97,7 +97,7 @@ class DialectClassifier:
             # Initialize zero-shot classification pipeline
             self.classifier = pipeline(
                 "zero-shot-classification",
-                model="microsoft/deberta-large-mnli",
+                model="typeform/distilbert-base-uncased-mnli",
                 device=0 if self.device == "cuda" else -1
             )
             

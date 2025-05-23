@@ -38,7 +38,7 @@ def load_classifier():
     try:
         return DialectClassifier(
             whisper_model_size="small",
-            dialect_model_name="albert-base-v2"
+            dialect_model_name="distilbert-base-uncased"
         )
     except Exception as e:
         st.error(f"Failed to load models: {str(e)}")

@@ -37,7 +37,7 @@ def load_classifier():
     """Load the classifier model with caching."""
     try:
         return DialectClassifier(
-            whisper_model_size="medium",
+            whisper_model_size="small",
             dialect_model_name="bert-base-uncased"
         )
     except Exception as e:

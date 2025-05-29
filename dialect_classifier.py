@@ -222,8 +222,8 @@ class DialectClassifier:
             for dialect in self.SUPPORTED_DIALECTS:
                 final_scores[dialect] = (
                     0* pattern_scores[dialect] +
-                    0.3 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
-                    0.7 * zero_shot_scores[dialect]
+                    0.4 * transformer_scores[self.SUPPORTED_DIALECTS.index(dialect)] +
+                    0.6 * zero_shot_scores[dialect]
                 )
                 print(dialect)
                 print(pattern_scores[dialect])

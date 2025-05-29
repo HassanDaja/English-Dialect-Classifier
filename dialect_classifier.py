@@ -8,8 +8,8 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipe
 import re
 from collections import Counter
 import torch
-torch.manual_seed(100000000000)
-np.random.seed(100000000000)
+torch.manual_seed(1000)
+np.random.seed(1000)
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)

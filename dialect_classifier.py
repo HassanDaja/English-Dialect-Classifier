@@ -7,7 +7,9 @@ import whisper
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
 import re
 from collections import Counter
-
+import torch
+torch.manual_seed(42)
+np.random.seed(42)
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
